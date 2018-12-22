@@ -10,8 +10,17 @@ class Mainpage(tk.Frame):
         self.createMid()
         self.createBot()
         self.auto()
-        
+    #尚未解決問題:
+    #目前總共有8ROW跟7COLUMN    
+    #可是我調整的WIDTH跟GRID跟預期的不一樣
+    #需要一個背景
+    #需要改字體顏色
+    #第三層需要按鈕反白
+    #要寫第二個介面
+    
+    #底下分的層數同圖片分三上中下三個部分
     def createTop(self):
+
         f1 = tkFont.Font(size = 15, family = "Fixdsys", weight=tkFont.BOLD)
         f2 = tkFont.Font(size = 25, family = "Fixdsys", weight=tkFont.BOLD)
         f3 = tkFont.Font(size = 10, family = "Fixdsys", weight=tkFont.BOLD)
@@ -23,10 +32,9 @@ class Mainpage(tk.Frame):
         self.half = tk.Button(self, text = "1/2", height = 1, width = 5, font = f3) 
         self.double = tk.Button(self, text = "x2", height = 1, width = 5, font = f3) 
         self.max = tk.Button(self, text = "MAX", height = 1, width = 5, font = f3) 
-        self.empty = tk.Label(self, text = "") 
+
         
         self.lblBet.grid(row = 0, column = 1)
-        self.empty.grid(row = 0, column = 3)
         self.lblProfit.grid(row = 0, column = 4)
         self.txtDebt.grid(row = 1, column = 0, columnspan = 3, sticky = tk.NE + tk.SW) 
         self.txtProfit.grid(row = 1, column = 4, columnspan = 3, sticky = tk.NE + tk.SW)
@@ -57,20 +65,20 @@ class Mainpage(tk.Frame):
 
         self.lblLose = tk.Label(self, text = "ON LOSE", height = 2, font = f1)
         self.lblWin = tk.Label(self, text = "ON WIN", height = 2, font = f1)
-        self.resetL = tk.Button(self, text = "RESET TO BASE", height = 1, font =f1)
-        self.increaseL = tk.Button(self, text = "INCRASE BY", height = 1, font =f1)
+        self.Lreset = tk.Button(self, text = "RESET TO BASE", height = 1, font =f1)
+        self.Lincrease = tk.Button(self, text = "INCRASE BY", height = 1, font =f1)
         self.Lnum = tk.Text(self, height = 1, width = 10, font = f2)
-        self.resetW = tk.Button(self, text = "RESET TO BASE", height = 1, font =f1)
-        self.increaseW = tk.Button(self, text = "INCREASE BY", height = 1, font =f1)
+        self.Wreset = tk.Button(self, text = "RESET TO BASE", height = 1, font =f1)
+        self.Wincrease = tk.Button(self, text = "INCREASE BY", height = 1, font =f1)
         self.Wnum = tk.Text(self, height = 1, width = 10, font = f2)
         
         self.lblLose.grid(row = 6, column = 0, sticky = tk.W)
         self.lblWin.grid(row = 6, column = 4, sticky = tk.W)
-        self.resetL.grid(row = 7, column = 0, sticky = tk.W + tk.E)
-        self.increaseL.grid(row = 7, column = 1, sticky = tk.W + tk.E)
+        self.Lreset.grid(row = 7, column = 0, sticky = tk.W + tk.E)
+        self.Lincrease.grid(row = 7, column = 1, sticky = tk.W + tk.E)
         self.Lnum.grid(row = 7, column = 2, sticky = tk.W + tk.E)
-        self.resetW.grid(row = 7, column = 4, sticky = tk.W + tk.E)
-        self.increaseW.grid(row = 7, column = 5, sticky = tk.W + tk.E)
+        self.Wreset.grid(row = 7, column = 4, sticky = tk.W + tk.E)
+        self.Wincrease.grid(row = 7, column = 5, sticky = tk.W + tk.E)
         self.Wnum.grid(row = 7, column = 6, sticky = tk.W + tk.E)
     def auto(self):
         f1 = tkFont.Font(size = 40, family = "Fixdsys", weight=tkFont.BOLD)
