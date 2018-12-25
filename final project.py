@@ -11,12 +11,12 @@ class Mainpage(tk.Frame):
         self.createBot()                        # 主頁最下面 row = 6 ~ 7
         self.auto()                             # auto 按鍵的按鈕
         self.createUser()                       # 使用者資料
+        self.createResultTitle()                # 執行結果的標題
     #尚未解決問題:
     #需要一個背景
     #需要改字體顏色
     #第三層需要按鈕反白
     #要寫第二個介面
-    
     #底下分的層數同圖片分三上中下三個部分
     def createUser(self):
         f1 = tkFont.Font(size = 10, family = "Fixdsys", weight=tkFont.BOLD)
@@ -44,13 +44,13 @@ class Mainpage(tk.Frame):
         self.btndouble = tk.Button(self, text = "x2", font = f3, height = 1, width = 18)                    # 賭金乘以二button 宣告
         self.btnmax = tk.Button(self, text = "MAX", font = f3, height = 1, width = 18)                      # 賭金成為最大值button 宣告
 
-        self.lblBet.grid(column = 0, row = 0, columnspan = 3, sticky = tk.SW + tk.NE)
-        self.lblProfit.grid(column = 4, row = 0, columnspan = 2, sticky = tk.SW + tk.NE)
-        self.txtDebt.grid(column = 0, row = 1, columnspan = 3, sticky = tk.SW + tk.NE)
-        self.Profit.grid(column = 4, row = 1, columnspan = 2, sticky = tk.SW + tk.NE)
-        self.btnhalf.grid(column = 0, row = 3, sticky = tk.SW + tk.NE)
-        self.btndouble.grid(column = 1, row = 3, sticky = tk.SW + tk.NE)
-        self.btnmax.grid(column = 2, row = 3, sticky = tk.SW + tk.NE)
+        self.lblBet.grid(row = 0, column = 0, columnspan = 3, sticky = tk.SW + tk.NE)
+        self.lblProfit.grid(row = 0, column = 4, columnspan = 2, sticky = tk.SW + tk.NE)
+        self.txtDebt.grid(row = 1, column = 0, columnspan = 3, sticky = tk.S + tk.N)
+        self.Profit.grid(row = 1, column = 4, columnspan = 2, sticky = tk.SW + tk.NE)
+        self.btnhalf.grid(row = 3, column = 0, sticky = tk.SW + tk.NE)
+        self.btndouble.grid(row = 3, column = 1, sticky = tk.SW + tk.NE)
+        self.btnmax.grid(row = 3, column = 2, sticky = tk.SW + tk.NE)
 
    
     def createMid(self): 
@@ -58,18 +58,18 @@ class Mainpage(tk.Frame):
         f2 = tkFont.Font(size = 10, family = "Fixdsys", weight=tkFont.BOLD)
         
         self.lblUnderwin = tk.Label(self, text = "ROLL UNDER TO WIN", height = 3, width = 30, font = f1)
-        self.lblundernum = tk.Text(self, font = f2, height = 2, width = 30)
+        self.txtundernum = tk.Text(self, font = f2, height = 2, width = 30)
         self.lblPay = tk.Label(self, text = "PAYOUT", height = 3, width = 30, font = f1)
         self.txtpaynum = tk.Text(self, font = f2, height = 2, width = 30)
         self.lblChance = tk.Label(self, text = "WIN CAHNCE %", font = f1, height = 3, width = 30)
-        self.txtchance = tk.Label(self, text = "待定", height = 2, width = 30, font = f2)
+        self.lblchance = tk.Label(self, text = "待定", height = 2, width = 30, font = f2)
     
         self.lblUnderwin.grid(row = 4, column = 0, columnspan = 2, sticky = tk.SW + tk.NE)
-        self.lblundernum.grid(row = 5, column = 0, columnspan = 2, sticky = tk.SW + tk.NE)
+        self.txtundernum.grid(row = 5, column = 0, columnspan = 2, sticky = tk.S + tk.N)
         self.lblPay.grid(row = 4 , column = 2, columnspan = 2, sticky = tk.SW + tk.NE)
-        self.txtpaynum.grid(row = 5 , column = 2, columnspan = 2, sticky = tk.SW + tk.NE)
+        self.txtpaynum.grid(row = 5 , column = 2, columnspan = 2, sticky = tk.S + tk.N)
         self.lblChance.grid(row = 4 ,column = 4, columnspan = 2, sticky = tk.SW + tk.NE)
-        self.txtchance.grid(row = 5 , column = 4, columnspan = 2, sticky = tk.SW + tk.NE)
+        self.lblchance.grid(row = 5 , column = 4, columnspan = 2, sticky = tk.SW + tk.NE)
     def createBot(self):
         f1 = tkFont.Font(size = 10, family = "Fixdsys", weight=tkFont.BOLD)
         f2 = tkFont.Font(size = 10, family = "Fixdsys", weight=tkFont.BOLD)
@@ -91,6 +91,7 @@ class Mainpage(tk.Frame):
         self.btnWreset.grid(row = 7, column = 3, sticky = tk.SW + tk.NE)
         self.btnWincrease.grid(row = 7, column = 4, sticky = tk.SW + tk.NE)
         self.txtWnum.grid(row = 7, column = 5, sticky = tk.SW + tk.NE)
+        
     def auto(self):
         f1 = tkFont.Font(size = 10, family = "Fixdsys", weight=tkFont.BOLD)
         self.btnroll = tk.Button(self, text = "ROLL", font =f1, height = 2, width = 15)
@@ -99,7 +100,24 @@ class Mainpage(tk.Frame):
         self.btnroll.grid(row =8, column =3)
         self.btnauto.grid(row =8, column =4)
         
-    
+    def createResultTitle(self):
+        f1 = tkFont.Font(size = 10, family = "Fixdsys", weight=tkFont.BOLD)
+        
+        self.ghost = tk.Label(self, text="", font=f1, height=2, width=18)
+        self.lbltime = tk.Label(self, text="Time", font=f1, height=2, width=18)
+        self.lblbet = tk.Label(self, text="Bet", font=f1, height=2, width=18)
+        self.lblmul = tk.Label(self, text="Multiplier", font=f1, height=2, width=18)
+        self.lblgame = tk.Label(self, text="Game", font=f1, height=2, width=18)
+        self.lblroll = tk.Label(self, text="Roll", font=f1, height=2, width=18)
+        self.lblprofit = tk.Label(self, text="Profit", font=f1, height=2, width=18)
+        
+        self.ghost.grid(row = 9, column = 0, sticky = tk.SW + tk.NE)
+        self.lbltime.grid(row = 10, column = 0, sticky = tk.SW + tk.NE)
+        self.lblbet.grid(row = 10, column = 1, sticky = tk.SW + tk.NE)
+        self.lblmul.grid(row = 10, column = 2, sticky = tk.SW + tk.NE)
+        self.lblgame.grid(row = 10, column = 3, sticky = tk.SW + tk.NE)
+        self.lblroll.grid(row = 10, column = 4, sticky = tk.SW + tk.NE)
+        self.lblprofit.grid(row = 10, column = 5, sticky = tk.SW + tk.NE)
         
 menu = Mainpage()
 menu.master.title("Gambling")
