@@ -64,7 +64,6 @@ class StartPage1(tk.Frame):
 
 # 開始頁面
 
-
 class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -96,7 +95,7 @@ class StartPage(tk.Frame):
         self.Mymoney = tk.Label(self, text="0.0", font=f1, height=1, width=4)
         self.username = tk.Text(self, font=f1, height=1, width=15)
 
-        self.lblname.grid(column=6, row=0, sticky=tk.SW + tk.NE)
+        self.lblname.place(x=900, y=10)
         self.lblmoney.grid(column=6, row=1, sticky=tk.SW + tk.NE)
         self.username.grid(column=7, row=0, sticky=tk.SW + tk.NE)
         self.Mymoney.grid(column=7, row=1, sticky=tk.SW + tk.NE)
@@ -196,7 +195,6 @@ class StartPage(tk.Frame):
         self.btnauto.grid(row=8, column=4)
 
 # 第一頁
-
 
 class PageOne(tk.Frame):
     # initialization
