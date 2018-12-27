@@ -200,6 +200,7 @@ while True :
 			BetAmount = MinBet
 
 		BetNow = BetAmount
+		ProfitOnWin = (BetAmount*Payout) - BetAmount
 		
 	
 	
@@ -209,6 +210,7 @@ while True :
 		Payout = float(input())
 		WinChance = float(99.0/Payout)
 		RollUnderToWin = WinChance
+		ProfitOnWin = (BetAmount*Payout) - BetAmount
 		
 	elif x == "wc" :
 	
@@ -216,6 +218,7 @@ while True :
 		WinChance = float(input())
 		Payout = float(99.0/WinChance)	
 		RollUnderToWin = WinChance
+		ProfitOnWin = (BetAmount*Payout) - BetAmount
 		
 	elif x == "lt" :
 		
@@ -250,6 +253,7 @@ while True :
 			BetAmount = MinBet
 			
 		BetNow = BetAmount
+		ProfitOnWin = (BetAmount*Payout) - BetAmount
 		
 		
 	elif x == "bd" :
@@ -264,6 +268,7 @@ while True :
 			BetAmount = MaxBet
 			
 		BetNow = BetAmount
+		ProfitOnWin = (BetAmount*Payout) - BetAmount
 		
 		
 	elif x == "bm" :
@@ -271,6 +276,7 @@ while True :
 		#全押
 		BetAmount = BetMax(BetAmount)
 		BetNow = BetAmount
+		ProfitOnWin = (BetAmount*Payout) - BetAmount
 	
 	
 	else :
