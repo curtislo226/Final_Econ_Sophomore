@@ -63,7 +63,11 @@ def RandomRoll(number) :
 	out = random.uniform(0,100)
 	return out
 #隨機轉出0-100之間的小數數字
-	
+
+def profit(BetAmount,Payout) :
+	ProfitOnWin = (BetAmount*Payout) - BetAmount
+	return ProfitOnWin
+#獲勝利潤	
 	
 def BetHalf(BetAmount) :
 	BetAmount *= 0.5
@@ -110,7 +114,7 @@ Payout = float(2.0) #更改 : "p"
 WinChance = float(99.0/Payout) #更改 : "wc"
 RollUnderToWin = WinChance
 
-ProfitOnWin = (BetAmount*Payout) - BetAmount
+ProfitOnWin = profit(BetAmount,Payout)
 MaxBet = float(10000000)
 MinBet = float(0.00000001)
 
@@ -169,7 +173,9 @@ while True :
 		
 		if money < BetNow :
 		
+			BetAmount = money
 			BetNow = money
+			ProfitOnWin = profit(BetAmount,Payout)
 		
 	
 	elif x == "END" :
@@ -186,7 +192,6 @@ while True :
 		#低於最小注額時自動改成MinBet
 		
 		BetAmount = float(input())
-		print(BetAmount)
 		
 		if BetAmount > money :
 			
@@ -200,7 +205,7 @@ while True :
 			BetAmount = MinBet
 
 		BetNow = BetAmount
-		ProfitOnWin = (BetAmount*Payout) - BetAmount
+		ProfitOnWin = profit(BetAmount,Payout)
 		
 	
 	
@@ -210,7 +215,7 @@ while True :
 		Payout = float(input())
 		WinChance = float(99.0/Payout)
 		RollUnderToWin = WinChance
-		ProfitOnWin = (BetAmount*Payout) - BetAmount
+		ProfitOnWin = profit(BetAmount,Payout)
 		
 	elif x == "wc" :
 	
@@ -218,7 +223,7 @@ while True :
 		WinChance = float(input())
 		Payout = float(99.0/WinChance)	
 		RollUnderToWin = WinChance
-		ProfitOnWin = (BetAmount*Payout) - BetAmount
+		ProfitOnWin = profit(BetAmount,Payout)
 		
 	elif x == "lt" :
 		
@@ -253,7 +258,7 @@ while True :
 			BetAmount = MinBet
 			
 		BetNow = BetAmount
-		ProfitOnWin = (BetAmount*Payout) - BetAmount
+		ProfitOnWin = profit(BetAmount,Payout)
 		
 		
 	elif x == "bd" :
@@ -268,7 +273,7 @@ while True :
 			BetAmount = MaxBet
 			
 		BetNow = BetAmount
-		ProfitOnWin = (BetAmount*Payout) - BetAmount
+		ProfitOnWin = profit(BetAmount,Payout)
 		
 		
 	elif x == "bm" :
@@ -276,7 +281,7 @@ while True :
 		#全押
 		BetAmount = BetMax(BetAmount)
 		BetNow = BetAmount
-		ProfitOnWin = (BetAmount*Payout) - BetAmount
+		ProfitOnWin = profit(BetAmount,Payout)
 	
 	
 	else :
