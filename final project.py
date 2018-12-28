@@ -68,6 +68,7 @@ class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.config(bg="ivory3")
         self.controller = controller
         self.grid()
         self.createTop()                        # 主頁最上面 row = 1 ~ 3
@@ -101,92 +102,93 @@ class StartPage(tk.Frame):
         self.Mymoney.place(x = 400, y = 10)
 
     def createTop(self):
-        f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
-        f2 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
-        f3 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
+        f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
+        f2 = tkfont.Font(size=30, family="Fixdsys", weight=tkfont.BOLD)
+        f3 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
 
         # 賭金標題label 宣告
         self.lblBet = tk.Label(self, text="BET AMOUNT",
-                               font=f1, height=2, width=35)
+                               font=f1, height=2, width=49)
+        # 利潤標題label 宣告
         self.lblProfit = tk.Label(
-            self, text="PROFIT ON WIN", font=f1, height=2, width=30)          # 利潤標題label 宣告
+            self, text="PROFIT ON WIN", font=f1, height=2, width=50)          
         # 賭金內容txt 宣告
-        self.txtDebt = tk.Text(self, font=f2, height=2, width=65)
+        self.txtDebt = tk.Entry(self, font=f2)
         # 利潤內容label 宣告
-        self.Profit = tk.Label(self, text="待改變", font=f2, height=2, width=30)
+        self.Profit = tk.Label(self, text="123", font=f1, height=2, width=50, bg='white')
         # 賭金除以二button 宣告
-        self.btnhalf = tk.Button(self, text="1/2", font=f3, height=1, width=18)
+        self.btnhalf = tk.Button(self, text="1/2", font=f3, height=1, width=16)
         # 賭金乘以二button 宣告
         self.btndouble = tk.Button(
-            self, text="x2", font=f3, height=1, width=18)
+            self, text="x2", font=f3, height=1, width=16)
         # 賭金成為最大值button 宣告
-        self.btnmax = tk.Button(self, text="MAX", font=f3, height=1, width=18)
+        self.btnmax = tk.Button(self, text="MAX", font=f3, height=1, width=15)
 
-        self.lblBet.place(x = 0, y = 60)
+        self.lblBet.place(x = 100, y = 60)
         self.lblProfit.place(x = 600, y = 60)
         self.txtDebt.place(x = 100, y = 100)
         self.Profit.place(x = 600, y = 100)
-        self.btnhalf.place(x = 100, y = 140)
-        self.btndouble.place(x = 253, y = 140)
-        self.btnmax.place(x = 406, y = 140)
+        self.btnhalf.place(x = 100, y = 150)
+        self.btndouble.place(x = 253, y = 150)
+        self.btnmax.place(x = 406, y = 150)
 
     def createMid(self):
-        f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
-        f2 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
+        f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
+        f2 = tkfont.Font(size=30, family="Fixdsys", weight=tkfont.BOLD)
 
         self.lblUnderwin = tk.Label(
-            self, text="ROLL UNDER TO WIN", height=3, width=30, font=f1)
-        self.txtundernum = tk.Text(self, font=f2, height=2, width=30)
+            self, text="ROLL UNDER TO WIN", height=3, width=20, font=f1)
+        self.txtundernum = tk.Entry(self, font=f2)
         self.lblPay = tk.Label(self, text="PAYOUT",
-                               height=3, width=30, font=f1)
-        self.txtpaynum = tk.Text(self, font=f2, height=2, width=30)
+                               height=3, width=20, font=f1)
+        self.txtpaynum = tk.Entry(self, font=f2)
         self.lblChance = tk.Label(
             self, text="WIN CAHNCE %", font=f1, height=3, width=30)
-        self.lblchance = tk.Label(self, text="待定", height=2, width=30, font=f2)
+        self.lblchance = tk.Label(self, text="123", height=2, width=30, font=f1)
 
         self.lblUnderwin.place(x = 100, y = 200)
-        self.txtundernum.place(x = 100, y = 250)
+        self.txtundernum.place(x = 100, y = 250, width=185)
         self.lblPay.place(x = 500, y = 200)
-        self.txtpaynum.place(x = 500, y = 250)
+        self.txtpaynum.place(x = 500, y = 250, width=185)
         self.lblChance.place(x = 800, y = 200)
         self.lblchance.place(x = 800, y = 250)
 
     def createBot(self):
-        f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
-        f2 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
+        f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
+        f2 = tkfont.Font(size=30, family="Fixdsys", weight=tkfont.BOLD)
 
         self.lblLose = tk.Label(self, text="ON LOSE",
                                 font=f1, height=3, width=35)
         self.lblWin = tk.Label(self, text="ON WIN",
                                font=f1, height=3, width=35)
         self.btnLreset = tk.Button(
-            self, text="RESET TO BASE", font=f1, height=3, width=18)
+            self, text="RESET TO BASE", font=f1, height=2, width=18)
         self.btnLincrease = tk.Button(
-            self, text="INCRASE BY", font=f1, height=3, width=18)
-        self.txtLnum = tk.Text(self, font=f2, height=3.5, width=18)
+            self, text="INCRASE BY", font=f1, height=2, width=18)
+        self.txtLnum = tk.Entry(self, font=f2)
         self.btnWreset = tk.Button(
-            self, text="RESET TO BASE", font=f1, height=3, width=18)
+            self, text="RESET TO BASE", font=f1, height=2, width=18)
         self.btnWincrease = tk.Button(
-            self, text="INCREASE BY", font=f1, height=3, width=18)
-        self.txtWnum = tk.Text(self, font=f2, height=3.5, width=18)
+            self, text="INCREASE BY", font=f1, height=2, width=18)
+        self.txtWnum = tk.Entry(self, font=f2)
 
-        self.lblLose.place(x = 200, y = 300)
-        self.lblWin.place(x = 700, y = 300)
-        self.btnLreset.place(x = 100, y = 350)
-        self.btnLincrease.place(x = 253, y = 350)
-        self.txtLnum.place(x = 406, y = 350)
-        self.btnWreset.place(x = 600, y = 350)
-        self.btnWincrease.place(x = 753, y = 350)
-        self.txtWnum.place(x = 906, y = 350)
+        self.lblLose.place(x = 160, y = 320)
+        self.lblWin.place(x = 660, y = 320)
+        self.btnLreset.place(x = 100, y = 370)
+        self.btnLincrease.place(x = 253, y = 370)
+        self.txtLnum.place(x = 415, y = 370, width=100)
+        self.btnWreset.place(x = 600, y = 370)
+        self.btnWincrease.place(x = 753, y = 370)
+        self.txtWnum.place(x = 905, y = 370, width=100)
 
     def auto(self):
-        f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
+        f1 = tkfont.Font(size=20, family="Fixdsys", weight=tkfont.BOLD)
         self.btnroll = tk.Button(
-            self, text="ROLL", font=f1, height=2, width=18)
+            self, text="ROLL", font=f1, height=1, width=18, bg="ivory3")
         self.btnauto = tk.Button(
-            self, text="Auto", font=f1, height=2, width=18)
+            self, text="Auto", font=f1, height=1, width=18, bg="ivory3")
 
-        self.btnroll.place(x = 400, y = 450)
+        self.btnroll.place(x = 200, y = 450)
         self.btnauto.place(x = 600, y = 450)
 
 # 第一頁
