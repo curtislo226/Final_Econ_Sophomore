@@ -60,7 +60,7 @@ class StartPage1(tk.Frame):
             'Bahnschrift SemiBold SemiConden', 24))
         self.btn1 = ttk.Button(self, text="Start Game", width=15,
                                command=lambda: controller.show_frame("PageOne"))
-        self.btn1.place(x=425, y=350)
+        self.btn1.place(x=520, y=550)
 
 # 開始頁面
 
@@ -77,7 +77,7 @@ class StartPage(tk.Frame):
         self.createUser()                       # 使用者資料
         self.btn1 = ttk.Button(self, text="Start Game", width=15,
                                command=lambda: controller.show_frame("PageOne"))
-        self.btn1.place(x=425, y=400)
+        self.btn1.place(x=520, y=550)
     # 尚未解決問題:
     # 需要一個背景
     # 需要改字體顏色
@@ -95,10 +95,10 @@ class StartPage(tk.Frame):
         self.Mymoney = tk.Label(self, text="0.0", font=f1, height=1, width=4)
         self.username = tk.Text(self, font=f1, height=1, width=15)
 
-        self.lblname.place(x=900, y=10)
-        self.lblmoney.grid(column=6, row=1, sticky=tk.SW + tk.NE)
-        self.username.grid(column=7, row=0, sticky=tk.SW + tk.NE)
-        self.Mymoney.grid(column=7, row=1, sticky=tk.SW + tk.NE)
+        self.lblname.place(x=100, y=10)
+        self.lblmoney.place(x = 300, y = 10)
+        self.username.place(x = 200, y = 10)
+        self.Mymoney.place(x = 400, y = 10)
 
     def createTop(self):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
@@ -107,13 +107,13 @@ class StartPage(tk.Frame):
 
         # 賭金標題label 宣告
         self.lblBet = tk.Label(self, text="BET AMOUNT",
-                               font=f1, height=2, width=60)
+                               font=f1, height=2, width=35)
         self.lblProfit = tk.Label(
-            self, text="PROFIT ON WIN", font=f1, height=2, width=60)          # 利潤標題label 宣告
+            self, text="PROFIT ON WIN", font=f1, height=2, width=30)          # 利潤標題label 宣告
         # 賭金內容txt 宣告
-        self.txtDebt = tk.Text(self, font=f2, height=1, width=60)
+        self.txtDebt = tk.Text(self, font=f2, height=2, width=65)
         # 利潤內容label 宣告
-        self.Profit = tk.Label(self, text="待改變", font=f2, height=1, width=60)
+        self.Profit = tk.Label(self, text="待改變", font=f2, height=2, width=30)
         # 賭金除以二button 宣告
         self.btnhalf = tk.Button(self, text="1/2", font=f3, height=1, width=18)
         # 賭金乘以二button 宣告
@@ -122,14 +122,13 @@ class StartPage(tk.Frame):
         # 賭金成為最大值button 宣告
         self.btnmax = tk.Button(self, text="MAX", font=f3, height=1, width=18)
 
-        self.lblBet.grid(row=0, column=0, columnspan=3, sticky=tk.SW + tk.NE)
-        self.lblProfit.grid(row=0, column=4, columnspan=2,
-                            sticky=tk.SW + tk.NE)
-        self.txtDebt.grid(row=1, column=0, columnspan=3, sticky=tk.S + tk.N)
-        self.Profit.grid(row=1, column=4, columnspan=2, sticky=tk.SW + tk.NE)
-        self.btnhalf.grid(row=3, column=0, sticky=tk.SW + tk.NE)
-        self.btndouble.grid(row=3, column=1, sticky=tk.SW + tk.NE)
-        self.btnmax.grid(row=3, column=2, sticky=tk.SW + tk.NE)
+        self.lblBet.place(x = 0, y = 60)
+        self.lblProfit.place(x = 600, y = 60)
+        self.txtDebt.place(x = 100, y = 100)
+        self.Profit.place(x = 600, y = 100)
+        self.btnhalf.place(x = 100, y = 140)
+        self.btndouble.place(x = 253, y = 140)
+        self.btnmax.place(x = 406, y = 140)
 
     def createMid(self):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
@@ -145,54 +144,50 @@ class StartPage(tk.Frame):
             self, text="WIN CAHNCE %", font=f1, height=3, width=30)
         self.lblchance = tk.Label(self, text="待定", height=2, width=30, font=f2)
 
-        self.lblUnderwin.grid(
-            row=4, column=0, columnspan=2, sticky=tk.SW + tk.NE)
-        self.txtundernum.grid(
-            row=5, column=0, columnspan=2, sticky=tk.S + tk.N)
-        self.lblPay.grid(row=4, column=2, columnspan=2, sticky=tk.SW + tk.NE)
-        self.txtpaynum.grid(row=5, column=2, columnspan=2, sticky=tk.S + tk.N)
-        self.lblChance.grid(row=4, column=4, columnspan=2,
-                            sticky=tk.SW + tk.NE)
-        self.lblchance.grid(row=5, column=4, columnspan=2,
-                            sticky=tk.SW + tk.NE)
+        self.lblUnderwin.place(x = 100, y = 200)
+        self.txtundernum.place(x = 100, y = 250)
+        self.lblPay.place(x = 500, y = 200)
+        self.txtpaynum.place(x = 500, y = 250)
+        self.lblChance.place(x = 800, y = 200)
+        self.lblchance.place(x = 800, y = 250)
 
     def createBot(self):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
         f2 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
 
         self.lblLose = tk.Label(self, text="ON LOSE",
-                                font=f1, height=3, width=56)
+                                font=f1, height=3, width=35)
         self.lblWin = tk.Label(self, text="ON WIN",
-                               font=f1, height=3, width=56)
+                               font=f1, height=3, width=35)
         self.btnLreset = tk.Button(
             self, text="RESET TO BASE", font=f1, height=3, width=18)
         self.btnLincrease = tk.Button(
             self, text="INCRASE BY", font=f1, height=3, width=18)
-        self.txtLnum = tk.Text(self, font=f2, height=3, width=18)
+        self.txtLnum = tk.Text(self, font=f2, height=3.5, width=18)
         self.btnWreset = tk.Button(
             self, text="RESET TO BASE", font=f1, height=3, width=18)
         self.btnWincrease = tk.Button(
             self, text="INCREASE BY", font=f1, height=3, width=18)
-        self.txtWnum = tk.Text(self, font=f2, height=3, width=18)
+        self.txtWnum = tk.Text(self, font=f2, height=3.5, width=18)
 
-        self.lblLose.grid(row=6, column=0, columnspan=3, sticky=tk.SW + tk.NE)
-        self.lblWin.grid(row=6, column=4, columnspan=2, sticky=tk.SW + tk.NE)
-        self.btnLreset.grid(row=7, column=0, sticky=tk.SW + tk.NE)
-        self.btnLincrease.grid(row=7, column=1, sticky=tk.SW + tk.NE)
-        self.txtLnum.grid(row=7, column=2, sticky=tk.SW + tk.NE)
-        self.btnWreset.grid(row=7, column=3, sticky=tk.SW + tk.NE)
-        self.btnWincrease.grid(row=7, column=4, sticky=tk.SW + tk.NE)
-        self.txtWnum.grid(row=7, column=5, sticky=tk.SW + tk.NE)
+        self.lblLose.place(x = 200, y = 300)
+        self.lblWin.place(x = 700, y = 300)
+        self.btnLreset.place(x = 100, y = 350)
+        self.btnLincrease.place(x = 253, y = 350)
+        self.txtLnum.place(x = 406, y = 350)
+        self.btnWreset.place(x = 600, y = 350)
+        self.btnWincrease.place(x = 753, y = 350)
+        self.txtWnum.place(x = 906, y = 350)
 
     def auto(self):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
         self.btnroll = tk.Button(
-            self, text="ROLL", font=f1, height=2, width=15)
+            self, text="ROLL", font=f1, height=2, width=18)
         self.btnauto = tk.Button(
-            self, text="Auto", font=f1, height=2, width=15)
+            self, text="Auto", font=f1, height=2, width=18)
 
-        self.btnroll.grid(row=8, column=3)
-        self.btnauto.grid(row=8, column=4)
+        self.btnroll.place(x = 400, y = 450)
+        self.btnauto.place(x = 600, y = 450)
 
 # 第一頁
 
