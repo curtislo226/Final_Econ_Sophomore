@@ -5,66 +5,6 @@ import tkinter.font as tkfont
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-###函數設定###
-
-import random
-
-def RandomRoll(number) :
-    out = random.uniform(0,100)
-    return out
-#隨機轉出0-100之間的小數數字
-
-def profit(BetAmount,Payout) :
-    ProfitOnWin = (BetAmount*Payout) - BetAmount
-    return ProfitOnWin
-#獲勝利潤	
-	
-def BetHalf(BetAmount) :
-    BetAmount *= 0.5
-    return BetAmount
-#改下一半,"bh"
-	
-	
-def BetDouble(BetAmount) :
-    BetAmount *= 2
-    if BetAmount > money :
-        BetAmount = money
-    return BetAmount
-#改下2倍,"bd"
-	
-	
-def BetMax(BetAmount) :
-    BetAmount = money
-    return BetAmount
-#全押,"bm"
-
-def IncreaseBy(BetNow,percent) :		
-    BetNow += BetNow * percent
-    return BetNow
-#輸/贏時加注
-
-###預設各項參數###
-
-money = float(100)
-Number = float(0)
-
-BetAmount = float(20.0)
-BetNow = BetAmount
-
-Payout = float(2.0) 
-WinChance = float(99.0/Payout)
-RollUnderToWin = WinChance
-
-ProfitOnWin = profit(BetAmount,Payout)
-MaxBet = float(10000000)
-MinBet = float(0.00000001)
-
-LoseType = "B"
-OnLosePercent = float(1) 
-
-WinType = "A" 
-OnWinPercent = float(0) 
-
 
 class SampleApp(tk.Tk):
     # initialization
@@ -148,18 +88,18 @@ class StartPage(tk.Frame):
 
     def createUser(self):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
-
+        f2 = tkfont.Font(size=15, family="Fixdsys", weight=tkfont.BOLD)
         self.lblname = tk.Label(self, text="Username",
                                 font=f1, height=1, width=15)
         self.lblmoney = tk.Label(
             self, text="Money", font=f1, height=1, width=15)
-        self.Mymoney = tk.Label(self, text=str(money), font=f1, height=1, width=4)
-        self.username = tk.Text(self, font=f1, height=1, width=15)
+        self.Mymoney = tk.Entry(self, font=f2)
+        self.username = tk.Entry(self, font=f2)
 
         self.lblname.place(x=100, y=10)
         self.lblmoney.place(x = 300, y = 10)
-        self.username.place(x = 200, y = 10)
-        self.Mymoney.place(x = 400, y = 10)
+        self.username.place(x = 200, y = 10, width = 75)
+        self.Mymoney.place(x = 400, y = 10, width = 300)
 
     def createTop(self):
         f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
@@ -175,14 +115,14 @@ class StartPage(tk.Frame):
         # 賭金內容txt 宣告
         self.txtDebt = tk.Entry(self, font=f2)
         # 利潤內容label 宣告
-        self.Profit = tk.Label(self, text=str(ProfitOnWin), font=f1, height=2, width=50, bg='white')
+        self.Profit = tk.Label(self, text="123", font=f1, height=2, width=50, bg='white')
         # 賭金除以二button 宣告
-        self.btnhalf = tk.Button(self, text="1/2", font=f3, height=1, width=16)
+        self.btnhalf = tk.Button(self, text="1/2", command = self.BetHalf, font=f3, height=1, width=16)
         # 賭金乘以二button 宣告
         self.btndouble = tk.Button(
-            self, text="x2", font=f3, height=1, width=16)
+            self, text="x2", command = self.BetDouble, font=f3, height=1, width=16)
         # 賭金成為最大值button 宣告
-        self.btnmax = tk.Button(self, text="MAX", font=f3, height=1, width=15)
+        self.btnmax = tk.Button(self, text="MAX", command = self.BetMax, font=f3, height=1, width=15)
 
         self.lblBet.place(x = 100, y = 60)
         self.lblProfit.place(x = 600, y = 60)
@@ -191,27 +131,45 @@ class StartPage(tk.Frame):
         self.btnhalf.place(x = 100, y = 150)
         self.btndouble.place(x = 253, y = 150)
         self.btnmax.place(x = 406, y = 150)
+    
+    def BetHalf(self):
+        curNum = float(self.txtDebt.get()) 
+        self.txtDebt.delete(0,30)     
+        self.txtDebt.insert("0",str(curNum * 0.5))
+    def BetDouble(self):
+        curNum = float(self.txtDebt.get()) 
+        self.txtDebt.delete(0,30)     
+        self.txtDebt.insert("0",str(curNum * 2))
+    def BetMax(self):
+        curNum = float(self.Mymoney.get()) 
+        self.txtDebt.delete(0,30)     
+        self.txtDebt.insert(0,curNum)
+
 
     def createMid(self):
         f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
         f2 = tkfont.Font(size=30, family="Fixdsys", weight=tkfont.BOLD)
 
+        self.payout = tk.StringVar()
+        self.payout.set('2')
+        
         self.lblUnderwin = tk.Label(
             self, text="ROLL UNDER TO WIN", height=3, width=20, font=f1)
         self.txtundernum = tk.Entry(self, font=f2)
         self.lblPay = tk.Label(self, text="PAYOUT",
                                height=3, width=20, font=f1)
-        self.txtpaynum = tk.Entry(self, font=f2)
+        self.txtpaynum = tk.Entry(self, font=f2, textvariable = self.payout)
         self.lblChance = tk.Label(
-            self, text="WIN CAHNCE %", font=f1, height=3, width=30)
-        self.lblchance = tk.Label(self, text="123", height=2, width=30, font=f1)
+            self, text = 'WIN CHANCE%', font=f1, height=3, width=30)
+        self.lblchange = tk.Label(self, textvariable = self.payout, height=2, width=30, font=f1, bg='white')
 
         self.lblUnderwin.place(x = 100, y = 200)
         self.txtundernum.place(x = 100, y = 250, width=185)
         self.lblPay.place(x = 500, y = 200)
         self.txtpaynum.place(x = 500, y = 250, width=185)
         self.lblChance.place(x = 800, y = 200)
-        self.lblchance.place(x = 800, y = 250)
+        self.lblchange.place(x = 800, y = 250)
+
 
     def createBot(self):
         f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
@@ -285,5 +243,5 @@ class PageOne(tk.Frame):
 
 if __name__ == "__main__":
     app = SampleApp()
-    app.title("NTU ECON Game")
+    app.title("Gambling")
     app.mainloop()
