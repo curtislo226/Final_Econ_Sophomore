@@ -5,6 +5,66 @@ import tkinter.font as tkfont
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+###函數設定###
+
+import random
+
+def RandomRoll(number) :
+    out = random.uniform(0,100)
+    return out
+#隨機轉出0-100之間的小數數字
+
+def profit(BetAmount,Payout) :
+    ProfitOnWin = (BetAmount*Payout) - BetAmount
+    return ProfitOnWin
+#獲勝利潤	
+	
+def BetHalf(BetAmount) :
+    BetAmount *= 0.5
+    return BetAmount
+#改下一半,"bh"
+	
+	
+def BetDouble(BetAmount) :
+    BetAmount *= 2
+    if BetAmount > money :
+        BetAmount = money
+    return BetAmount
+#改下2倍,"bd"
+	
+	
+def BetMax(BetAmount) :
+    BetAmount = money
+    return BetAmount
+#全押,"bm"
+
+def IncreaseBy(BetNow,percent) :		
+    BetNow += BetNow * percent
+    return BetNow
+#輸/贏時加注
+
+###預設各項參數###
+
+money = float(100)
+Number = float(0)
+
+BetAmount = float(20.0)
+BetNow = BetAmount
+
+Payout = float(2.0) 
+WinChance = float(99.0/Payout)
+RollUnderToWin = WinChance
+
+ProfitOnWin = profit(BetAmount,Payout)
+MaxBet = float(10000000)
+MinBet = float(0.00000001)
+
+LoseType = "B"
+OnLosePercent = float(1) 
+
+WinType = "A" 
+OnWinPercent = float(0) 
+
 
 class SampleApp(tk.Tk):
     # initialization
@@ -93,7 +153,7 @@ class StartPage(tk.Frame):
                                 font=f1, height=1, width=15)
         self.lblmoney = tk.Label(
             self, text="Money", font=f1, height=1, width=15)
-        self.Mymoney = tk.Label(self, text="0.0", font=f1, height=1, width=4)
+        self.Mymoney = tk.Label(self, text=str(money), font=f1, height=1, width=4)
         self.username = tk.Text(self, font=f1, height=1, width=15)
 
         self.lblname.place(x=100, y=10)
@@ -115,7 +175,7 @@ class StartPage(tk.Frame):
         # 賭金內容txt 宣告
         self.txtDebt = tk.Entry(self, font=f2)
         # 利潤內容label 宣告
-        self.Profit = tk.Label(self, text="123", font=f1, height=2, width=50, bg='white')
+        self.Profit = tk.Label(self, text=str(ProfitOnWin), font=f1, height=2, width=50, bg='white')
         # 賭金除以二button 宣告
         self.btnhalf = tk.Button(self, text="1/2", font=f3, height=1, width=16)
         # 賭金乘以二button 宣告
