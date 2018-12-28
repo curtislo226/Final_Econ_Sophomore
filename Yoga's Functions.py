@@ -297,7 +297,14 @@ while True :
 	#贏錢數字,賠率,勝率
 	print(RollUnderToWin,Payout,WinChance)
 	#贏/輸時加注模式
-	print(LoseType+","+WinType)
+	if WinType == "A" :
+		print("RESET TO BASE",end = ",")
+	else :
+		print("INCREASE BY",end = ",")
+	if LoseType == "A" :
+		print("RESET TO BASE")
+	else :
+		print("INCREASE BY")	
 	#本次轉出數字
 	print(Number)
 	print(BetNow)
