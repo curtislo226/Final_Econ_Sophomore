@@ -107,22 +107,22 @@ username = str(input())
 money = float(100)
 Number = float(0)
 
-BetAmount = float(14.0) #更改 : "ba"
+BetAmount = float(20.0)
 BetNow = BetAmount
 
-Payout = float(2.0) #更改 : "p"
-WinChance = float(99.0/Payout) #更改 : "wc"
+Payout = float(2.0) 
+WinChance = float(99.0/Payout)
 RollUnderToWin = WinChance
 
 ProfitOnWin = profit(BetAmount,Payout)
 MaxBet = float(10000000)
 MinBet = float(0.00000001)
 
-LoseType = "B" #更改 : "lt"
-OnLosePercent = float(0.87) #更改 : "lp"
+LoseType = "B" 
+OnLosePercent = float(1) 
 
-WinType = "A" #更改 : "wt"
-OnWinPercent = float(0) #更改 : "wp"
+WinType = "A"
+OnWinPercent = float(0)
 
 
 
