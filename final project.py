@@ -5,6 +5,7 @@ import tkinter.font as tkfont
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+# 主頁
 
 class SampleApp(tk.Tk):
     # initialization
@@ -13,7 +14,8 @@ class SampleApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
         # tk.Tk.iconbitmap(self, default='Pixelpress-Pirates-Flag-Jolly-Roger.ico')
         # tk.Tk.wm_title(self, "NTU_Econ_game")
-
+        
+        
         self.minsize(width=1100, height=600)
         self.maxsize(width=1100, height=600)
 
@@ -22,45 +24,15 @@ class SampleApp(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
-        self.frames = {}
-        # 有製作任何新的頁面就加進這個for loop 裡面
-        for F in (StartPage, PageOne):
-            page_name = F.__name__
-            frame = F(parent=container, controller=self)
-            self.frames[page_name] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame("StartPage")
-
-    def show_frame(self, page_name):
-        frame = self.frames[page_name]
-        frame.tkraise()
-
-# 在button mutiple command 裡面負責轉換page
+        self.frame = StartPage(parent=container, controller=self)
+        
+        self.frame.grid(row=0, column=0, sticky="nsew")
+        
+    def show_roll(self):
+        self.t = Roll_Page(self.frame)
+        
 
 
-def showNextFrame(self, page):
-    self.controller.show_frame(page)
-
-# 這個不用看
-
-
-class StartPage1(tk.Frame):
-    # initialization
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        f1 = tkfont.Font(family='STLiti', size=72, weight="bold")
-        label = tk.Label(self, text="NTU ECON Game", font=f1, fg="#a2cffe")
-        label.pack(side="top", pady=100)
-        f1 = ttk.Style()
-        f1.configure('my.TButton', font=(
-            'Bahnschrift SemiBold SemiConden', 24))
-        self.btn1 = ttk.Button(self, text="Start Game", width=15,
-                               command=lambda: controller.show_frame("PageOne"))
-        self.btn1.place(x=520, y=550)
 
 # 開始頁面
 
@@ -77,7 +49,7 @@ class StartPage(tk.Frame):
         self.auto()                             # auto 按鍵的按鈕
         self.createUser()                       # 使用者資料
         self.btn1 = ttk.Button(self, text="Start Game", width=15,
-                               command=lambda: controller.show_frame("PageOne"))
+                               command=lambda: controller.show_roll())
         self.btn1.place(x=520, y=550)
     # 尚未解決問題:
     # 需要一個背景
@@ -86,6 +58,7 @@ class StartPage(tk.Frame):
     # 要寫第二個介面
     # 底下分的層數同圖片分三上中下三個部分
 
+    # 使用者名稱，金錢的部分
     def createUser(self):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
         f2 = tkfont.Font(size=15, family="Fixdsys", weight=tkfont.BOLD)
@@ -100,7 +73,8 @@ class StartPage(tk.Frame):
         self.lblmoney.place(x = 300, y = 10)
         self.username.place(x = 200, y = 10, width = 75)
         self.Mymoney.place(x = 400, y = 10, width = 300)
-
+    
+    # 賭金、利潤的部分
     def createTop(self):
         f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
         f2 = tkfont.Font(size=30, family="Fixdsys", weight=tkfont.BOLD)
@@ -132,20 +106,7 @@ class StartPage(tk.Frame):
         self.btndouble.place(x = 253, y = 150)
         self.btnmax.place(x = 406, y = 150)
     
-    def BetHalf(self):
-        curNum = float(self.txtDebt.get()) 
-        self.txtDebt.delete(0,30)     
-        self.txtDebt.insert("0",str(curNum * 0.5))
-    def BetDouble(self):
-        curNum = float(self.txtDebt.get()) 
-        self.txtDebt.delete(0,30)     
-        self.txtDebt.insert("0",str(curNum * 2))
-    def BetMax(self):
-        curNum = float(self.Mymoney.get()) 
-        self.txtDebt.delete(0,30)     
-        self.txtDebt.insert(0,curNum)
-
-
+    # 擲骰判定，賠率，勝率的部分
     def createMid(self):
         f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
         f2 = tkfont.Font(size=30, family="Fixdsys", weight=tkfont.BOLD)
@@ -170,7 +131,7 @@ class StartPage(tk.Frame):
         self.lblChance.place(x = 800, y = 200)
         self.lblchange.place(x = 800, y = 250)
 
-
+    # 贏了或輸了後要做什麼的部分
     def createBot(self):
         f1 = tkfont.Font(size=11, family="Fixdsys", weight=tkfont.BOLD)
         f2 = tkfont.Font(size=30, family="Fixdsys", weight=tkfont.BOLD)
@@ -199,6 +160,7 @@ class StartPage(tk.Frame):
         self.btnWincrease.place(x = 753, y = 370)
         self.txtWnum.place(x = 905, y = 370, width=100)
 
+    # 執行按鈕的部分
     def auto(self):
         f1 = tkfont.Font(size=20, family="Fixdsys", weight=tkfont.BOLD)
         self.btnroll = tk.Button(
@@ -208,15 +170,27 @@ class StartPage(tk.Frame):
 
         self.btnroll.place(x = 200, y = 450)
         self.btnauto.place(x = 600, y = 450)
+        
+    # 所有button函式
+    def BetHalf(self):
+        curNum = float(self.txtDebt.get()) 
+        self.txtDebt.delete(0,30)     
+        self.txtDebt.insert("0",str(curNum * 0.5))
+    def BetDouble(self):
+        curNum = float(self.txtDebt.get()) 
+        self.txtDebt.delete(0,30)     
+        self.txtDebt.insert("0",str(curNum * 2))
+    def BetMax(self):
+        curNum = float(self.Mymoney.get()) 
+        self.txtDebt.delete(0,30)     
+        self.txtDebt.insert(0,curNum)
 
-# 第一頁
 
-class PageOne(tk.Frame):
-    # initialization
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
+# 執行結果在這個頁面顯示
+    
+class Roll_Page(tk.Toplevel):
+    def __init__(self, data):
+        tk.Toplevel.__init__(self)
         self.createResultTitle()
 
     def createResultTitle(self):
@@ -232,14 +206,13 @@ class PageOne(tk.Frame):
         self.lblprofit = tk.Label(
             self, text="Profit", font=f1, height=2, width=18)
 
-        self.ghost.grid(row=9, column=0, sticky=tk.SW + tk.NE)
-        self.lbltime.grid(row=10, column=0, sticky=tk.SW + tk.NE)
-        self.lblbet.grid(row=10, column=1, sticky=tk.SW + tk.NE)
-        self.lblmul.grid(row=10, column=2, sticky=tk.SW + tk.NE)
-        self.lblgame.grid(row=10, column=3, sticky=tk.SW + tk.NE)
-        self.lblroll.grid(row=10, column=4, sticky=tk.SW + tk.NE)
-        self.lblprofit.grid(row=10, column=5, sticky=tk.SW + tk.NE)
-
+        self.ghost.grid(row=0, column=0, sticky=tk.SW + tk.NE)
+        self.lbltime.grid(row=1, column=0, sticky=tk.SW + tk.NE)
+        self.lblbet.grid(row=1, column=1, sticky=tk.SW + tk.NE)
+        self.lblmul.grid(row=1, column=2, sticky=tk.SW + tk.NE)
+        self.lblgame.grid(row=1, column=3, sticky=tk.SW + tk.NE)
+        self.lblroll.grid(row=1, column=4, sticky=tk.SW + tk.NE)
+        self.lblprofit.grid(row=1, column=5, sticky=tk.SW + tk.NE)
 
 if __name__ == "__main__":
     app = SampleApp()
