@@ -18,16 +18,7 @@ def profit(BetAmount,Payout) :
 
     
 money = float(100)
-Number = float(0)
 
-BetAmount = float(10.0)
-BetNow = BetAmount
-
-Payout = float(2.0) 
-WinChance = float(99.0/Payout)
-RollUnderToWin = WinChance
-
-ProfitOnWin = profit(BetAmount,Payout)
 
 
 # 主頁
@@ -167,10 +158,7 @@ class StartPage(tk.Frame):
         self.txtWnum = tk.Entry(self, font = f10)
         
         
-       #---BetNow設定---#
        
-        
-        
        #---最底層ROLL,AUTO---#
         
         
@@ -218,10 +206,16 @@ class StartPage(tk.Frame):
         
         
     # 所有button函式
+    
+    
+        
+
+        
     def BetHalf(self):
         
-        global BetAmount
-        global BetNow
+        BetAmount = float(self.txtDebt.get())
+        Payout = float(self.txtpayout.get())
+        
         
         self.BetAmountstr.set(str(BetAmount*0.5))
         BetAmount *= 0.5
@@ -231,15 +225,17 @@ class StartPage(tk.Frame):
         
     def BetDouble(self):
         
-        global BetAmount
-        global BetNow
+        BetAmount = float(self.txtDebt.get())
+        Payout = float(self.txtpayout.get())
+        
         
         if (BetAmount*2 > money) :
             self.BetAmountstr.set(str(money))
             BetAmount = money
-            BetNow = BetAmount
             ProfitOnWin = profit(BetAmount,Payout)
             self.ProfitOnWinstr.set(str(ProfitOnWin))
+            BetNow = BetAmount
+            
         else :
             self.BetAmountstr.set(str(BetAmount*2))
             BetAmount *= 2
@@ -249,8 +245,9 @@ class StartPage(tk.Frame):
             
     def BetMax(self):
     
-        global BetAmount
-        global BetNow
+        BetAmount = float(self.txtDebt.get())
+        Payout = float(self.txtpayout.get())
+        
     
         self.BetAmountstr.set(str(money))
         BetAmount = money
@@ -274,14 +271,14 @@ class StartPage(tk.Frame):
         
         self.ProfitOnWinstr.set(str(BetAmount*(Payout-1)))
        
-        if BetNow <= money : 
+        if BetNow < money : 
         
             money -= BetNow
             RollNumber = random.uniform(0,100)
        
             print(RollNumber)
        
-            if RollNumber < 49.5 :
+            if RollNumber <= WinChance :
             
                 money += BetNow*Payout
                 self.moneystr.set(str(money))
