@@ -273,21 +273,23 @@ class StartPage(tk.Frame):
         self.WinChancestr.set(str(WinChance))
         
         self.ProfitOnWinstr.set(str(BetAmount*(Payout-1)))
-        
-        money -= BetNow
-        RollNumber = random.uniform(0,100)
        
-        print(RollNumber)
-       
-        if RollNumber < 49.5 :
+        if BetNow <= money : 
         
-            money += BetNow*Payout
-            self.moneystr.set(str(money))
+            money -= BetNow
+            RollNumber = random.uniform(0,100)
+       
+            print(RollNumber)
+       
+            if RollNumber < 49.5 :
+            
+                money += BetNow*Payout
+                self.moneystr.set(str(money))
                         
-        else :
+            else :
            
-            self.moneystr.set(str(money))
-       
+                self.moneystr.set(str(money))
+        
 # 執行結果在這個頁面顯示
     
 class Roll_Page(tk.Toplevel):
