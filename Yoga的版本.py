@@ -18,7 +18,8 @@ def profit(BetAmount,Payout) :
 
     
 money = float(100)
-
+ONLOSE = 0
+ONWIN = 0
 
 
 # 主頁
@@ -147,28 +148,37 @@ class StartPage(tk.Frame):
 
         
        #---第四層(ONWIN,ONLOSE)---#
-
+        
         self.lblLose = tk.Label(self, text="ON LOSE",font=f9, height=3, width=35)
         self.lblWin = tk.Label(self, text="ON WIN",font=f9, height=3, width=35)
+        
         self.btnLreset = tk.Button(self, text="RESET TO BASE", font=f9, height=2, width=18)
         self.btnLincrease = tk.Button(self, text="INCRASE BY", font=f9, height=2, width=18)
-        self.txtLnum = tk.Entry(self, font = f10)
+        
+        self.LosePercentstr = tk.StringVar()
+        self.LosePercentstr.set("1.0")
+        
+        self.txtLnum = tk.Entry(self,textvariable = self.LosePercentstr , font = f10)
+        LosePercent = float(self.txtLnum.get())
+        
+        
         self.btnWreset = tk.Button(self, text="RESET TO BASE", font=f9, height=2, width=18)
         self.btnWincrease = tk.Button(self, text="INCREASE BY", font=f9, height=2, width=18)
-        self.txtWnum = tk.Entry(self, font = f10)
         
+        self.WinPercentstr = tk.StringVar()
+        self.WinPercentstr.set("0.0")
         
+        self.txtWnum = tk.Entry(self , textvariable = self.WinPercentstr , font = f10)
+        WinPercent = float(self.txtWnum.get())
+   
        
        #---最底層ROLL,AUTO---#
-        
         
         self.btnroll = tk.Button(self, text="ROLL",command = self.ROLL,font=f8, height=1, width=18, bg="ivory3")
         self.btnauto = tk.Button(self, text="Auto", font=f8, height=1, width=18, bg="ivory3")
 
        
-       
-       
-       
+     
         #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx#
         self.lblname.place(x=100, y=10)
         self.lblmoney.place(x = 300, y = 10)
@@ -216,12 +226,14 @@ class StartPage(tk.Frame):
         BetAmount = float(self.txtDebt.get())
         Payout = float(self.txtpayout.get())
         
-        
         self.BetAmountstr.set(str(BetAmount*0.5))
         BetAmount *= 0.5
-        BetNow = BetAmount
+        
         ProfitOnWin = profit(BetAmount,Payout)
         self.ProfitOnWinstr.set(str(ProfitOnWin))
+    
+        
+        
         
     def BetDouble(self):
         
@@ -234,12 +246,12 @@ class StartPage(tk.Frame):
             BetAmount = money
             ProfitOnWin = profit(BetAmount,Payout)
             self.ProfitOnWinstr.set(str(ProfitOnWin))
-            BetNow = BetAmount
+            
             
         else :
             self.BetAmountstr.set(str(BetAmount*2))
             BetAmount *= 2
-            BetNow = BetAmount
+            
             ProfitOnWin = profit(BetAmount,Payout)
             self.ProfitOnWinstr.set(str(ProfitOnWin))
             
@@ -251,7 +263,7 @@ class StartPage(tk.Frame):
     
         self.BetAmountstr.set(str(money))
         BetAmount = money
-        BetNow = BetAmount
+        
         ProfitOnWin = profit(BetAmount,Payout)
         self.ProfitOnWinstr.set(str(ProfitOnWin))
     
@@ -260,32 +272,52 @@ class StartPage(tk.Frame):
     def ROLL(self) :
     
         global money
-        global BetAmount
         
         BetAmount = float(self.txtDebt.get())
         Payout = float(self.txtpayout.get())
-        BetNow = BetAmount
         
         WinChance = float(99/Payout)
         self.WinChancestr.set(str(WinChance))
         
         self.ProfitOnWinstr.set(str(BetAmount*(Payout-1)))
-       
-        if BetNow <= money and money > 0 : 
         
-            money -= BetNow
+        LosePercent = float(self.txtLnum.get())
+        WinPercent = float(self.txtWnum.get())
+        
+   
+        if BetAmount <= money and money > 0 : 
+        
+            money -= BetAmount
             RollNumber = random.uniform(0,100)
        
             print(RollNumber)
        
             if RollNumber <= WinChance :
             
-                money += BetNow*Payout
+                money += BetAmount*Payout
                 self.moneystr.set(str(money))
-                        
+                
+                if ONWIN == 0 :
+                    
+                    BetAmount *= (1+WinPercent)
+                    self.BetAmountstr.set(str(BetAmount))
+                    
+                    ProfitOnWin = profit(BetAmount,Payout)
+                    self.ProfitOnWinstr.set(str(ProfitOnWin))
+                    
+                
+                
             else :
            
                 self.moneystr.set(str(money))
+                
+                if ONLOSE == 0 :
+                    
+                    BetAmount *= (1+LosePercent)
+                    self.BetAmountstr.set(str(BetAmount))
+                    
+                    ProfitOnWin = profit(BetAmount,Payout)
+                    self.ProfitOnWinstr.set(str(ProfitOnWin))
         
 # 執行結果在這個頁面顯示
     
@@ -304,8 +336,7 @@ class Roll_Page(tk.Toplevel):
                                font=f1, height=2, width=18)
         self.lblgame = tk.Label(self, text="Game", font=f1, height=2, width=18)
         self.lblroll = tk.Label(self, text="Roll", font=f1, height=2, width=18)
-        self.lblprofit = tk.Label(
-            self, text="Profit", font=f1, height=2, width=18)
+        self.lblprofit = tk.Label(self, text="Profit", font=f1, height=2, width=18)
 
         self.ghost.grid(row=0, column=0, sticky=tk.SW + tk.NE)
         self.lbltime.grid(row=1, column=0, sticky=tk.SW + tk.NE)
