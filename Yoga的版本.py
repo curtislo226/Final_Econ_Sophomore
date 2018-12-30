@@ -271,7 +271,7 @@ class StartPage(tk.Frame):
         
         self.ProfitOnWinstr.set(str(BetAmount*(Payout-1)))
        
-        if BetNow < money : 
+        if BetNow <= money and money > 0 : 
         
             money -= BetNow
             RollNumber = random.uniform(0,100)
