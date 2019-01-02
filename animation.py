@@ -299,9 +299,9 @@ class Roll_Page(tk.Toplevel):
     def __init__(self, data):
         tk.Toplevel.__init__(self)
         self.createResultTitle(data)  # roll_page標題
-        self.createLabels()				# 存放執行結果的labels
-        self.get_data(data)				# 把StartPage選擇好的狀態抓下來
-        self.after(500, lambda: self.refresh(data))  # 重複更新
+        #self.createLabels()				# 存放執行結果的labels
+        #self.get_data(data)				# 把StartPage選擇好的狀態抓下來
+        #self.after(500, lambda: self.refresh(data))  # 重複更新
     def createResultTitle(self, data):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
 
@@ -316,7 +316,7 @@ class Roll_Page(tk.Toplevel):
         self.lblprofit = tk.Label(
             self, text="Profit", font=f1, height=2, width=18)
         self.btnstop = tk.Button(self, text="Stop", font=f1,						# Stop按鈕，只有按了之後，money才會回傳
-                                 height=2, width=18, command=lambda: self.stop(data))
+                                 height=2, width=18)
         self.lblani = tk.Label(self, text="randnum", font=f1, height=2, width=18)
         self.ghost.grid(row=0, column=0, sticky=tk.SW + tk.NE)
         self.lbltime.grid(row=1, column=0, sticky=tk.SW + tk.NE)
@@ -327,8 +327,8 @@ class Roll_Page(tk.Toplevel):
         self.lblprofit.grid(row=1, column=5, sticky=tk.SW + tk.NE)
         self.btnstop.grid(row=0, column=6, sticky=tk.SW + tk.NE)
         self.lblani.grid(row=0, column=7, sticky=tk.SW + tk.NE)
-    def show_roll(self):
-        self.t = Roll_Page(self.frame)
+    #def show_roll(self):
+    #    self.t = Roll_Page(self.frame)
 
 if __name__ == "__main__":
     app = SampleApp()
