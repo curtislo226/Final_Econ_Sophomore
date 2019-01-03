@@ -15,10 +15,10 @@ class SampleApp(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         # tk.Tk.iconbitmap(self, default='Pixelpress-Pirates-Flag-Jolly-Roger.ico')
-        # tk.Tk.wm_title(self, "NTU_Econ_game")
+        # tk.Tk.wm_title(self, "Gambling")
 
-        self.minsize(width=1100, height=600)
-        self.maxsize(width=1100, height=600)
+        self.minsize(width=1100, height=700)
+        self.maxsize(width=1100, height=700)
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
@@ -89,6 +89,7 @@ class StartPage(tk.Frame):
         self.BetAmountstr = tk.DoubleVar()
         self.BetAmountstr.set(10.0)
         self.BetAmountstr.trace("w", self.written_bet)
+        self.betnow = 10.0
 
         self.lblBet = tk.Label(self, text="BET AMOUNT",
                                font=f3, height=2, width=49)
@@ -98,7 +99,7 @@ class StartPage(tk.Frame):
         self.btnhalf = tk.Button(
             self, text="1/2", command=lambda: self.BetAmountstr.set(self.BetAmountstr.get() / 2), font=f5, height=1, width=16)
         self.btndouble = tk.Button(
-            self, text="x2", command=lambda: self.BetAmountstr.set(self.BetAmountstr.get() * 2), font=f5, height=1, width=16)
+            self, text="x2", command=self.doublebet, font=f5, height=1, width=16)
         self.btnmax = tk.Button(
             self, text="MAX", command=lambda: self.BetAmountstr.set(self.moneystr.get()), font=f5, height=1, width=15)
 
@@ -146,10 +147,10 @@ class StartPage(tk.Frame):
         self.btnLreset = tk.Button(
             self, text="RESET TO BASE", font=f9, height=2, width=18, command=self.OnloseRB)
         self.btnLincrease = tk.Button(
-            self, text="INCRASE BY", font=f9, height=2, width=18, command=self.OnloseIC)
+            self, text="INCRASE BY(%)", font=f9, height=2, width=18, command=self.OnloseIC)
 
         self.LosePercentstr = tk.DoubleVar()
-        self.LosePercentstr.set(1.0)
+        self.LosePercentstr.set(100.0)
         self.txtLnum = tk.Entry(
             self, textvariable=self.LosePercentstr, font=f10, state=tk.DISABLED)
         self.btnLreset["relief"] = "sunken"
@@ -157,10 +158,10 @@ class StartPage(tk.Frame):
         self.btnWreset = tk.Button(                                             # 贏了後要做什麼的部分
             self, text="RESET TO BASE", font=f9, height=2, width=18, command=self.OnwinRB)
         self.WinPercentstr = tk.DoubleVar()
-        self.WinPercentstr.set(0.0)
+        self.WinPercentstr.set(100.0)
 
         self.btnWincrease = tk.Button(
-            self, text="INCREASE BY", font=f9, height=2, width=18, command=self.OnwinIC)
+            self, text="INCREASE BY(%)", font=f9, height=2, width=18, command=self.OnwinIC)
 
         self.txtWnum = tk.Entry(
             self, textvariable=self.WinPercentstr, font=f10, state=tk.DISABLED)
@@ -173,6 +174,26 @@ class StartPage(tk.Frame):
             self, text="ROLL", command=self.ROLL, font=f8, height=1, width=18, bg="ivory3")
         self.btnauto = tk.Button(
             self, text="Auto", font=f8, height=1, width=18, bg="ivory3", command=lambda: self.controller.show_roll())
+
+        #---roll時會顯示的東西---#
+
+        self.lbltime = tk.Label(self, text="Time", font=f1, height=2, width=18)
+        self.lblbet = tk.Label(self, text="Bet", font=f1, height=2, width=18)
+        self.lblmul = tk.Label(self, text="Multiplier",
+                               font=f1, height=2, width=18)
+        self.lblgame = tk.Label(self, text="Game", font=f1, height=2, width=18)
+        self.lblroll = tk.Label(self, text="Roll", font=f1, height=2, width=18)
+        self.lblprofit = tk.Label(
+            self, text="Profit", font=f1, height=2, width=18)
+
+        self.lbltimeS = tk.Label(self, text="", font=f1, height=2, width=18)
+        self.lblbetS = tk.Label(self, text="", font=f1, height=2, width=18)
+        self.lblmulS = tk.Label(self, text="",
+                               font=f1, height=2, width=18)
+        self.lblgameS = tk.Label(self, text="", font=f1, height=2, width=18)
+        self.lblrollS = tk.Label(self, text="", font=f1, height=2, width=18)
+        self.lblprofitS = tk.Label(
+            self, text="", font=f1, height=2, width=18)
 
         #++++++++++++++++++++++++++++++++++++#
 
@@ -209,6 +230,22 @@ class StartPage(tk.Frame):
         self.btnroll.place(x=200, y=450)
         self.btnauto.place(x=600, y=450)
         #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx#
+        self.lbltime.place(x=100, y=550)
+        self.lblbet.place(x=250, y=550)
+        self.lblmul.place(x=400, y=550)
+        self.lblgame.place(x=550, y=550)
+        self.lblroll.place(x=700, y=550)
+        self.lblprofit.place(x=850, y=550)
+        #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx#
+        self.lbltimeS.place(x=100, y=580)
+        self.lblbetS.place(x=250, y=580)
+        self.lblmulS.place(x=400, y=580)
+        self.lblgameS.place(x=550, y=580)
+        self.lblrollS.place(x=700, y=580)
+        self.lblprofitS.place(x=850, y=580)
+        #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx#
+
+
 
     def written_payout(self, *args):
         try:
@@ -221,6 +258,7 @@ class StartPage(tk.Frame):
 
     def written_bet(self, *args):
         try:
+            self.betnow = self.BetAmountstr.get()
             self.ProfitOnWinstr.set(
                 self.BetAmountstr.get() * (self.payoutstr.get() - 1))
             if self.BetAmountstr.get() >= self.moneystr.get():
@@ -236,6 +274,14 @@ class StartPage(tk.Frame):
                                command=self.controller.destroy)
             label.pack()
             button.pack()
+
+    def doublebet(self):
+        if self.BetAmountstr.get() > self.moneystr.get() / 2:
+            self.BetAmountstr.set(self.moneystr.get())
+        else:
+            self.BetAmountstr.set(self.BetAmountstr.get() * 2)
+
+
 
     #+++++++++++++++++++++++++++++++++++++++++++++#
 
@@ -267,9 +313,14 @@ class StartPage(tk.Frame):
         money = self.moneystr.get()
         bet = self.BetAmountstr.get()
         win = self.WinChancestr.get()
-        loseper = self.LosePercentstr.get()
-        winper = self.WinPercentstr.get()
+        loseper = self.LosePercentstr.get() - 100
+        winper = self.WinPercentstr.get() - 100
         payout = self.payoutstr.get()
+        self.lbltimeS["text"] = datetime.datetime.now().strftime("%H:%M:%S")
+        self.lblbetS["text"] = str(bet)
+        self.lblmulS["text"] = str(self.payoutstr.get())
+        self.lblgameS["text"] = "<" + str(self.WinChancestr.get())
+        self.lblrollS["text"] = str(round(rand, 2))
 
         money -= bet
         profit = 0.0
@@ -278,7 +329,7 @@ class StartPage(tk.Frame):
             money += bet * payout
             profit = bet * (payout - 1)
             if self.btnWreset["relief"] == "sunken":
-                pass
+                bet = self.betnow
             else:
                 if winper != 0:
                     bet *= winper / 100
@@ -286,13 +337,16 @@ class StartPage(tk.Frame):
         else:
             profit = -bet
             if self.btnLreset["relief"] == "sunken":
-                pass
+                bet = self.betnow
             else:
                 if loseper != 0:
                     bet *= loseper / 100
 
         if bet > money:
             bet = money
+
+
+        self.lblprofitS["text"] = str(profit)
 
         self.moneystr.set(money)
         self.BetAmountstr.set(bet)
@@ -311,20 +365,20 @@ class Roll_Page(tk.Toplevel):
         self.after(500, lambda: self.refresh(data))  # 重複更新
 
     def get_data(self, data):
-        self.money = float(data.moneystr.get())							# 使用者持有金錢
-        self.originbet = self.bet = float(data.BetAmountstr.get())		# 使用者的賭金
-        self.rollnum = float(data.WinChancestr.get())					# 目標數字
-        self.payout = float(data.payoutstr.get())						# 賠率
-        if data.btnLreset["relief"] == "sunken":						# 檢測使用者有沒有選擇retrurn to base
+        self.money = data.moneystr.get()		          					# 使用者持有金錢
+        self.originbet = self.bet = data.BetAmountstr.get()	            	# 使用者的賭金
+        self.rollnum = data.WinChancestr.get()			                   	# 目標數字
+        self.payout = data.payoutstr.get()					             	# 賠率
+        if data.btnLreset["relief"] == "sunken":					       	# 檢測使用者有沒有選擇retrurn to base
             self.LRB = True
         else:
             self.LRB = False
-            self.LIC = float(data.txtLnum.get())
+            self.LIC = (data.LosePercentstr.get() - 100) / 100
         if data.btnWreset["relief"] == "sunken":
             self.WRB = True
         else:
             self.WRB = False
-            self.WIC = float(data.txtWnum.get())
+            self.WIC = (data.WinPercentstr.get() - 100) / 100
 
     def createResultTitle(self, data):
         f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
@@ -399,8 +453,8 @@ class Roll_Page(tk.Toplevel):
             round(profit, 8))
 
         data.moneystr.set(str(self.money))											# 把money資料回傳
-
-        self.after(500, lambda: self.refresh(data))									# 再更新一次
+        if self.money > 0:
+            self.after(500, lambda: self.refresh(data))
 
 
 if __name__ == "__main__":
