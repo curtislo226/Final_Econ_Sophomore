@@ -1,9 +1,7 @@
-import csv
 import random
 import tkinter as tk
 import tkinter.font as tkfont
 from tkinter import ttk
-from PIL import Image, ImageTk
 import datetime
 
 import random
@@ -267,11 +265,13 @@ class StartPage(tk.Frame):
             self.ProfitOnWinstr.set(0)
 
     def written_money(self, *args):
+        f1 = tkfont.Font(size=120, family="Fixdsys", weight=tkfont.BOLD)
+        f2 = tkfont.Font(size=70, family="Fixdsys", weight=tkfont.BOLD)
         if self.moneystr.get() <= 0:
             Toplevel = tk.Toplevel()
-            label = tk.Label(Toplevel, text="You are broken!!")
+            label = tk.Label(Toplevel, text="You are broken!!", font=f1, bg="red")
             button = tk.Button(Toplevel, text="Game Over",
-                               command=self.controller.destroy)
+                               command=self.controller.destroy, font=f2, fg="red", bg='ivory3')
             label.pack()
             button.pack()
 
@@ -313,8 +313,8 @@ class StartPage(tk.Frame):
         money = self.moneystr.get()
         bet = self.BetAmountstr.get()
         win = self.WinChancestr.get()
-        loseper = self.LosePercentstr.get() - 100
-        winper = self.WinPercentstr.get() - 100
+        loseper = self.LosePercentstr.get()
+        winper = self.WinPercentstr.get()
         payout = self.payoutstr.get()
         self.lbltimeS["text"] = datetime.datetime.now().strftime("%H:%M:%S")
         self.lblbetS["text"] = str(bet)
@@ -329,7 +329,7 @@ class StartPage(tk.Frame):
             money += bet * payout
             profit = bet * (payout - 1)
             if self.btnWreset["relief"] == "sunken":
-                bet = self.betnow
+                pass
             else:
                 if winper != 0:
                     bet *= winper / 100
@@ -337,7 +337,7 @@ class StartPage(tk.Frame):
         else:
             profit = -bet
             if self.btnLreset["relief"] == "sunken":
-                bet = self.betnow
+                pass
             else:
                 if loseper != 0:
                     bet *= loseper / 100
@@ -373,15 +373,15 @@ class Roll_Page(tk.Toplevel):
             self.LRB = True
         else:
             self.LRB = False
-            self.LIC = (data.LosePercentstr.get() - 100) / 100
+            self.LIC = data.LosePercentstr.get() / 100
         if data.btnWreset["relief"] == "sunken":
             self.WRB = True
         else:
             self.WRB = False
-            self.WIC = (data.WinPercentstr.get() - 100) / 100
+            self.WIC = data.WinPercentstr.get() / 100
 
     def createResultTitle(self, data):
-        f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
+        f1 = tkfont.Font(size=13, family="Fixdsys", weight=tkfont.BOLD)
 
         self.ghost = tk.Label(self, text="", font=f1,
                               height=2, width=18)			# 下面都是標題宣告
@@ -409,7 +409,7 @@ class Roll_Page(tk.Toplevel):
         self.destroy()
 
     def createLabels(self):															# 宣告存放執行結果的labels,放在二維list裡
-        f1 = tkfont.Font(size=10, family="Fixdsys", weight=tkfont.BOLD)
+        f1 = tkfont.Font(size=14, family="Fixdsys", weight=tkfont.BOLD)
         self.labels = [[tk.Label(self, text="", font=f1, height=2, width=18)
                         for j in range(6)] for i in range(7)]
         for i in range(7):
